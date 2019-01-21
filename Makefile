@@ -1,7 +1,19 @@
-NAME		=	ybuhai_filler
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: ybuhai <marvin@42.fr>                      +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2019/01/21 14:55:38 by ybuhai            #+#    #+#              #
+#    Updated: 2019/01/21 15:04:51 by ybuhai           ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-LIB			=	libft/
-LIB_N		=	libft.a
+NAME		=	ybuhai.filler
+
+LIB			=	libftprintf/
+LIB_N		=	libftprintf.a
 
 SRC_D		=	src/
 SRC			=	$(SRC_D)filler.c \
@@ -17,8 +29,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	@make -C $(LIB)
-	@$(C) -o $(NAME) $(OBJ) $(INCLUDE)
-	
+	@$(C) -o $(NAME) $(OBJ) $(LIB)$(LIB_N) $(INCLUDE)
 
 $(OBJ): | $(OBJ_D)
 
@@ -29,15 +40,13 @@ $(OBJ_D)%.o: %.c
 	@$(C) $(CFLAGS) $(INCLUDE) -o $@ -c $<
 
 clean:
-	@make clean -C libft
+	@make clean -C $(LIB)
 	@rm -f $(OBJ)
-	@echo "object files was deleted"
 
 fclean: clean
-	@make fclean -C libft
+	@make fclean -C $(LIB)
 	@rm -f $(NAME)
 	@rm -rf $(OBJ_D)
-	@rm -rf a.out
 
 re: fclean all
 
