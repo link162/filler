@@ -6,7 +6,7 @@
 #    By: ybuhai <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/21 14:55:38 by ybuhai            #+#    #+#              #
-#    Updated: 2019/01/21 15:04:51 by ybuhai           ###   ########.fr        #
+#    Updated: 2019/01/22 14:43:16 by ybuhai           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ LIB_N		=	libftprintf.a
 
 SRC_D		=	src/
 SRC			=	$(SRC_D)filler.c \
+				$(SRC_D)place.c \
 
 OBJ_D		=	obj/
 OBJ			=	$(addprefix $(OBJ_D), $(SRC:.c=.o))

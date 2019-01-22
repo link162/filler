@@ -27,8 +27,10 @@ typedef struct	s_filler
 	t_player	enemy;
 	t_piece		field;
 	t_piece		piece;
+	t_point		candidat;
 }				t_filler;
 
 t_filler		g_filler;
+int				find_place(void);
 
 #endif
