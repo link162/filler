@@ -6,7 +6,7 @@
 /*   By: ybuhai <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 14:43:34 by ybuhai            #+#    #+#             */
-/*   Updated: 2019/01/23 11:17:05 by ybuhai           ###   ########.fr       */
+/*   Updated: 2019/01/23 13:01:00 by ybuhai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int		find_place(void)
 		x = 0;
 		while (x < g_filler.field.width)
 		{
-			if (g_filler.field.height - g_filler.piece.height >= 0 && g_filler.field.width - g_filler.piece.width >= 0)
+			if (g_filler.field.height - y - g_filler.piece.height >= 0 && g_filler.field.width - x - g_filler.piece.width >= 0)
 				if (place_piece(y, x))
 				{
 					g_filler.candidat.y = y;
