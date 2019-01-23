@@ -1,6 +1,3 @@
-seed = 9542
-X: error on input
-./../ybuhai.filler: Segfault at 1
-players/superjeannot.filler won
-Score:
-141AGAINST1
+seed = 2950
+O: error on input
+../ybuhai.filler: Segfault at 13

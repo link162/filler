@@ -23,14 +23,14 @@ OBJ_D		=	obj/
 OBJ			=	$(addprefix $(OBJ_D), $(SRC:.c=.o))
 
 INCLUDE		=	-I includes/
-CFLAGS		=	-Wall -Wextra -Werror
+CFLAGS		=	-Wall -Wextra -Werror -g3 -O0
 C			=	gcc
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
 	@make -C $(LIB)
-	@$(C) -o $(NAME) $(OBJ) $(LIB)$(LIB_N) $(INCLUDE)
+	@$(C) -g3 -O0 -o $(NAME) $(OBJ) $(LIB)$(LIB_N) $(INCLUDE)
 
 $(OBJ): | $(OBJ_D)
 
