@@ -28,36 +28,40 @@ void	filler(void)
 void	clear_field(void)
 {
 	int		i;
-	char	*str;
+
 	i = 0;
 	if (!g_filler.piece.piece)
 		return ;
 	while (i < g_filler.piece.height)
 	{
-		str = g_filler.piece.piece[i];
-		ft_strdel(&str);
+		free(g_filler.piece.piece[i]);
 		i++;
 	}	
-	ft_memdel((void **)&g_filler.piece.piece);
+	free(g_filler.piece.piece);
 }
 
 void	read_field(void)
 {
-	char	*str;
-	int		i;
+	char		*str;
+	int			i;
+	static int	x;
 
 	i = 0;
 	get_next_line(0, &str);
 	free(str);
-	if (!g_filler.field.piece)
+	if (x != 10)
 		g_filler.field.piece = (char **)malloc(sizeof(char *) * g_filler.field.height);
 	while (i < g_filler.field.height)
 	{
 		get_next_line(0, &str);
-		g_filler.field.piece[i] = ft_strdup(&str[4]);
+		if (x == 10)
+			ft_strcpy(g_filler.field.piece[i], (&str[4]));
+		else
+			g_filler.field.piece[i] = ft_strdup(&str[4]);
 		free(str);
 		i++;
 	}
+	x = 10;
 }
 
 void	read_piece(void)
