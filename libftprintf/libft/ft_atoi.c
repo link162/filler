@@ -12,46 +12,27 @@
 
 #include "libft.h"
 
-static int	get_return(unsigned long long res, int minus, const char *str)
+int    ft_iswhitespace(int c)
 {
-	int	c;
-
-	c = 0;
-	while (*str <= '1' || *str >= '9')
-		str++;
-	while (ft_isdigit(*(str + c)))
-		c++;
-	if (c >= 19)
-		return (minus == -1 ? 0 : -1);
-	if (res > 9223372036854775807)
-		return (minus == -1 ? 0 : -1);
-	else
-		return (res * minus);
+    return (c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f'
+            || c == '\r');
 }
 
-int			ft_atoi(const char *str)
+int    ft_atoi(const char *str)
 {
-	unsigned long long	res;
-	int					l;
-	int					x;
-	int					minus;
-
-	minus = 1;
-	x = -1;
-	l = 0;
-	res = 0;
-	while (ft_isspace(*str))
-		str++;
-	while (str[l])
-		l++;
-	while (++x <= l)
-	{
-		if (ft_isdigit(str[x]))
-			res = (res * 10) + (str[x] - '0');
-		else if (x == 0 && (str[x] == '-' || str[x] == '+'))
-			minus = str[x] == '-' ? -1 : 1;
-		else
-			return (get_return(res, minus, str));
-	}
-	return (get_return(res, minus, str));
+    int        nbr;
+    char    neg;
+    
+    while (ft_iswhitespace(*str))
+        str++;
+    neg = (*str == '-');
+    if (*str == '-' || *str == '+')
+        str++;
+    nbr = 0;
+    while (ft_isdigit(*str))
+    {
+        nbr = nbr * 10 + (*str - '0');
+        str++;
+    }
+    return (neg ? -nbr : nbr);
 }
