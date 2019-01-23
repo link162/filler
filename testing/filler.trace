@@ -1,2 +1,6 @@
-seed = 2304
-O: timedout
+seed = 9542
+X: error on input
+./../ybuhai.filler: Segfault at 1
+players/superjeannot.filler won
+Score:
+141AGAINST1

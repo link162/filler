@@ -6,7 +6,7 @@
 /*   By: ybuhai <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 14:57:29 by ybuhai            #+#    #+#             */
-/*   Updated: 2019/01/22 19:38:12 by ybuhai           ###   ########.fr       */
+/*   Updated: 2019/01/23 11:19:15 by ybuhai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ void	filler(void)
 	ft_putnbr(g_filler.candidat.x);
 	ft_putchar('\n');
 	if (!res)
-		ft_putstr("errror\n");
-//		exit(1);
+		exit(1);
 }
 
 void	filler_p(void)
@@ -40,39 +39,52 @@ void	filler_p(void)
 		ft_printf("%s\n", g_filler.piece.piece[i++]);
 }
 
-void	clear_field(t_piece *squere)
+void	clear_field(void)
 {
 	int i;
 
 	i = 0;
-	if (!squere->piece)
+	if (!g_filler.piece.piece)
 		return ;
-	while (i < squere->height)
-		ft_strdel(&squere->piece[i++]);
-	ft_memdel((void **)&squere->piece);
+	while (i < g_filler.piece.height)
+		ft_strdel(&g_filler.piece.piece[i++]);
+	ft_memdel((void **)&g_filler.piece.piece);
 }
 
-void	read_field(t_piece *squere, int type)
+void	read_field(void)
 {
 	char	*str;
 	int		i;
 
 	i = 0;
-	clear_field(squere);
-	squere->piece = (char **)malloc(sizeof(char *) * squere->height);
-	while (i < squere->height)
+	get_next_line(0, &str);
+	ft_strdel(&str);
+	if (!g_filler.field.piece)
+		g_filler.field.piece = (char **)malloc(sizeof(char *) * g_filler.field.height);
+	while (i < g_filler.field.height)
 	{
 		get_next_line(0, &str);
-//		ft_printf("%s\n", str);
-		if (type && str[type] == '0')
-		{
-			free(str);
-			continue ;
-		}
-		squere->piece[i] = ft_strdup(&str[type]);
+		g_filler.field.piece[i] = ft_strdup(&str[4]);
 		free(str);
 		i++;
-//		ft_putchar('w');
+	}
+}
+
+void	read_piece(void)
+{
+	int		i;
+	char	*str;
+
+	i = 0;
+	if (g_filler.piece.piece)
+		clear_field();
+	g_filler.piece.piece = (char **)malloc(sizeof(char *) * (g_filler.piece.height + 1));
+	while (i < g_filler.piece.height)
+	{
+		get_next_line(0, &str);
+		g_filler.piece.piece[i] = ft_strdup(str);
+		free(str);
+		i++;
 	}
 }
 
@@ -88,20 +100,16 @@ void	cycle_filler(void)
 		{
 			g_filler.field.height = ft_atoi(&str[8]);
 			g_filler.field.width = ft_atoi(ft_strchr(&str[8], ' '));
-			read_field(&g_filler.field, 4);
-//			ft_putchar('z');
+			read_field();
 		}
 		if (!strncmp(str, "Piece ", 6))
 		{
-			
 			g_filler.piece.height = ft_atoi(&str[6]);
 			g_filler.piece.width = ft_atoi(ft_strchr(&str[6], ' '));
-			read_field(&g_filler.piece, 0);
-//			ft_putchar('x');
+			read_piece();
 			filler();
 		}
 		ft_strdel(&str);
-//		ft_putchar('e');
 	}
 }
 
