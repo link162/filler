@@ -6,7 +6,7 @@
 /*   By: ybuhai <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 14:57:29 by ybuhai            #+#    #+#             */
-/*   Updated: 2019/01/23 11:19:15 by ybuhai           ###   ########.fr       */
+/*   Updated: 2019/01/23 13:17:07 by ybuhai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,20 +25,6 @@ void	filler(void)
 		exit(1);
 }
 
-void	filler_p(void)
-{
-	int i;
-
-	i = 0;
-	ft_printf("FIELD\nheight = %i\nwidth = %i\n", g_filler.field.height, g_filler.field.width);
-	while (i < g_filler.field.height)
-		ft_printf("%s\n", g_filler.field.piece[i++]);
-	i = 0;
-	ft_printf("PIECE\nheight = %i\nwidth = %i\n", g_filler.piece.height, g_filler.piece.width);
-	while (i < g_filler.piece.height)
-		ft_printf("%s\n", g_filler.piece.piece[i++]);
-}
-
 void	clear_field(void)
 {
 	int i;
@@ -48,7 +34,7 @@ void	clear_field(void)
 		return ;
 	while (i < g_filler.piece.height)
 		ft_strdel(&g_filler.piece.piece[i++]);
-	ft_memdel((void **)&g_filler.piece.piece);
+	free(g_filler.piece.piece);
 }
 
 void	read_field(void)
@@ -58,7 +44,7 @@ void	read_field(void)
 
 	i = 0;
 	get_next_line(0, &str);
-	ft_strdel(&str);
+	free(str);
 	if (!g_filler.field.piece)
 		g_filler.field.piece = (char **)malloc(sizeof(char *) * g_filler.field.height);
 	while (i < g_filler.field.height)
@@ -109,7 +95,7 @@ void	cycle_filler(void)
 			read_piece();
 			filler();
 		}
-		ft_strdel(&str);
+		free(str);
 	}
 }
 
@@ -123,6 +109,6 @@ int		main(void)
 		return (1);
 	g_filler.player.number = str[10] == '1' ? 'O' : 'X';
 	g_filler.enemy.number = str[10] == '1' ? 'X' : 'O';
-	ft_strdel(&str);
+	free(str);
 	cycle_filler();
 }
