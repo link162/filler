@@ -6,7 +6,7 @@
 /*   By: ybuhai <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 14:57:29 by ybuhai            #+#    #+#             */
-/*   Updated: 2019/01/23 13:17:07 by ybuhai           ###   ########.fr       */
+/*   Updated: 2019/01/23 16:51:29 by ybuhai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,16 @@ void	filler(void)
 void	clear_field(void)
 {
 	int		i;
-
+	char	*str;
 	i = 0;
 	if (!g_filler.piece.piece)
 		return ;
 	while (i < g_filler.piece.height)
-		ft_strdel(&g_filler.piece.piece[i++]);
+	{
+		str = g_filler.piece.piece[i];
+		ft_strdel(&str);
+		i++;
+	}	
 	ft_memdel((void **)&g_filler.piece.piece);
 }
 
@@ -104,7 +108,6 @@ int		main(void)
 	char *str;
 
 	ft_bzero(&g_filler, sizeof(t_filler));
-	str = NULL;
 	if (!get_next_line(0, &str) || ft_strncmp("$$$ exec p", str, 10))
 		return (1);
 	g_filler.player.number = str[10] == '1' ? 'O' : 'X';

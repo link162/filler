@@ -11,134 +11,97 @@
 /* ************************************************************************** */
 
 #include "libft.h"
-
-char    *ft_strmerge(char *a, char *b)
+static void        ft_list_add_last(t_gnl **save, t_gnl *elem)
 {
-    char    *ret;
-
-    ret = ft_strjoin(a, b);
-    ft_strdel(&a);
-    ft_strdel(&b);
-    return (ret);
+    t_gnl *list;
+    
+    list = *save;
+    while (list->next != NULL)
+        list = list->next;
+    list->next = elem;
 }
-static char        *get_append(t_gnl *gnl)
-{
-    int i;
 
-    i = 0;
-    gnl->nl = 0;
-    while (gnl->i + i < gnl->count)
+static t_gnl    *ft_create_list(int fd)
+{
+    t_gnl *list;
+    
+    if (!(list = (t_gnl*)malloc(sizeof(*list))))
+        return (NULL);
+    list->fd = fd;
+    list->tempo = ft_strnew(0);
+    list->text = NULL;
+    list->next = NULL;
+    return (list);
+}
+
+static t_gnl    *ft_check_fd(t_gnl *save, int fd)
+{
+    t_gnl *tmp;
+    t_gnl *d_list;
+    
+    tmp = NULL;
+    d_list = save;
+    while (d_list)
     {
-        if (gnl->buf[gnl->i + i] == '\n')
+        if (d_list->fd == fd)
+            return (d_list);
+        if (!(d_list->next))
         {
-            gnl->nl = 1;
-            i++;
-            break ;
+            tmp = ft_create_list(fd);
+            ft_list_add_last(&d_list, tmp);
+            return (tmp);
         }
-        i++;
+        d_list = d_list->next;
     }
-    gnl->i += i;
-    return (ft_strsub(gnl->buf, gnl->i - i, i - gnl->nl));
+    return (NULL);
 }
 
-static t_gnl    *get_gnl(t_list **lst, int fd)
+static int        ft_check(char *save, char **line)
 {
-    t_gnl    *gnl;
-    t_list    *temp;
-
-    temp = *lst;
-    while (temp)
+    char    *fin;
+    
+    if (!save)
+        return (0);
+    fin = ft_strchr(save, '\n');
+    if (fin != NULL)
     {
-        gnl = (t_gnl *)(temp->content);
-        if (gnl->fd == fd)
-            return (gnl);
-        temp = temp->next;
+        *fin = '\0';
+        *line = ft_strdup(save);
+        ft_strncpy(save, &fin[1], ft_strlen(&fin[1]) + 1);
+        return (1);
     }
-    gnl = (t_gnl *)ft_memalloc(sizeof(t_gnl));
-    gnl->buf = ft_strnew(BUFF_SIZE);
-    gnl->count = BUFF_SIZE;
-    gnl->i = BUFF_SIZE;
-    gnl->fd = fd;
-    gnl->nl = 1;
-    temp = ft_lstnew(gnl, sizeof(t_gnl));
-    ft_memdel((void **)&gnl);
-    ft_lstadd(lst, temp);
-    return ((t_gnl *)(temp->content));
-}
-
-static void        del_gnl(t_list **lst, int fd, char **str)
-{
-    t_gnl    *gnl;
-    t_list    **temp;
-    t_list    *ptr;
-
-    temp = lst;
-    while (*temp)
+    else if (ft_strlen(save) > 0)
     {
-        gnl = (t_gnl *)((*temp)->content);
-        if (gnl->fd == fd)
-            break ;
-        *temp = ((*temp)->next);
-    }
-    if (*temp)
-    {
-        ptr = (*temp)->next;
-        ft_strdel(&(gnl->buf));
-        ft_memdel((void **)&gnl);
-        ft_memdel((void **)temp);
-        *temp = ptr;
-    }
-    ft_strdel(str);
-}
-
-static int        read_buffer(t_gnl *gnl, t_list **lst, char **temp, char **line)
-{
-    if (gnl->i == gnl->count)
-    {
-        gnl->count = read(gnl->fd, gnl->buf, BUFF_SIZE);
-        if (gnl->count == -1)
-        {
-            del_gnl(lst, gnl->fd, temp);
-            return (-1);
-        }
-        gnl->i = 0;
-        if (gnl->count == 0)
-        {
-            if (gnl->nl == 0)
-            {
-                *line = *temp;
-                return (1);
-            }
-        }
+        *line = ft_strdup(save);
+        *save = '\0';
+        return (1);
     }
     return (0);
 }
 
-int                get_next_line(int const fd, char **line)
+int                get_next_line(const int fd, char **line)
 {
-    static t_list    *lst;
-    t_gnl            *gnl;
-    char            *temp;
+    char            buf[BUFF_SIZE + 1];
+    static t_gnl    *save = NULL;
+    t_gnl            *tmp;
     int                ret;
-
-    if (fd < 0 || line == NULL)
+    
+    if (!(save))
+        save = ft_create_list(fd);
+    if (fd == -1 || line == NULL || BUFF_SIZE <= 0)
         return (-1);
-    gnl = get_gnl(&lst, fd);
-    temp = ft_strnew(0);
-    while (gnl->count > 0)
+    tmp = ft_check_fd(save, fd);
+    while (!(ft_strchr(tmp->tempo, '\n')))
     {
-        if ((ret = read_buffer(gnl, &lst, &temp, line)) != 0)
-            return (ret);
-        while (gnl->i < gnl->count)
-        {
-            temp = ft_strmerge(temp, get_append(gnl));
-            if (gnl->nl)
-            {
-                *line = temp;
-                return (1);
-            }
-        }
+        ret = read(fd, buf, BUFF_SIZE);
+        if (ret == -1)
+            return (-1);
+        if (ret == 0)
+            return (ft_check(tmp->text, line));
+        buf[ret] = '\0';
+        tmp->text = ft_strjoin(tmp->tempo, buf);
+        free(tmp->tempo);
+        tmp->tempo = tmp->text;
     }
-    del_gnl(&lst, fd, &temp);
-    return (0);
+    return (ft_check(tmp->text, line));
 }

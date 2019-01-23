@@ -22,7 +22,8 @@
 # include <limits.h>
 # include <sys/types.h>
 # include <sys/uio.h>
-
+# define ENDL '\n'
+# define END '\0'
 int					ft_printf(const char *format, ...);
 
 # define GET_NEXT_LINE_H
@@ -30,21 +31,13 @@ int					ft_printf(const char *format, ...);
 
 int					get_next_line(const int fd, char **line);
 
-typedef struct		s_filed
+typedef struct        s_gnl
 {
-	int				fd;
-	struct s_filed	*next;
-	char			*str;
-}					t_lst;
-
-typedef struct    s_gnl
-{
-    char        *buf;
-    int            count;
-    int            i;
-    int            nl;
-    int            fd;
-}                t_gnl;
+    char            *text;
+    char            *tempo;
+    struct s_gnl    *next;
+    int                fd;
+}                    t_gnl;
 
 void				*ft_memset(void *destination, int c, size_t n);
 void				ft_bzero(void *destination, size_t n);
