@@ -27,14 +27,14 @@ void	filler(void)
 
 void	clear_field(void)
 {
-	int i;
+	int		i;
 
 	i = 0;
 	if (!g_filler.piece.piece)
 		return ;
 	while (i < g_filler.piece.height)
 		ft_strdel(&g_filler.piece.piece[i++]);
-	free(g_filler.piece.piece);
+	ft_memdel((void **)&g_filler.piece.piece);
 }
 
 void	read_field(void)
@@ -112,3 +112,17 @@ int		main(void)
 	free(str);
 	cycle_filler();
 }
+/*
+int main(void)
+{
+	char *str;
+	int i = 0;
+
+	while (i < 5)
+	{
+		get_next_line(0, &str);
+		ft_printf("%s\n", str);
+		i++;
+		free(str);
+	}
+}*/

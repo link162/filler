@@ -11,10 +11,11 @@
 /* ************************************************************************** */
 
 #include "libft.h"
+
 char    *ft_strmerge(char *a, char *b)
 {
     char    *ret;
-    
+
     ret = ft_strjoin(a, b);
     ft_strdel(&a);
     ft_strdel(&b);
@@ -23,7 +24,7 @@ char    *ft_strmerge(char *a, char *b)
 static char        *get_append(t_gnl *gnl)
 {
     int i;
-    
+
     i = 0;
     gnl->nl = 0;
     while (gnl->i + i < gnl->count)
@@ -44,7 +45,7 @@ static t_gnl    *get_gnl(t_list **lst, int fd)
 {
     t_gnl    *gnl;
     t_list    *temp;
-    
+
     temp = *lst;
     while (temp)
     {
@@ -70,7 +71,7 @@ static void        del_gnl(t_list **lst, int fd, char **str)
     t_gnl    *gnl;
     t_list    **temp;
     t_list    *ptr;
-    
+
     temp = lst;
     while (*temp)
     {
@@ -119,7 +120,7 @@ int                get_next_line(int const fd, char **line)
     t_gnl            *gnl;
     char            *temp;
     int                ret;
-    
+
     if (fd < 0 || line == NULL)
         return (-1);
     gnl = get_gnl(&lst, fd);

@@ -26,15 +26,8 @@
 int					ft_printf(const char *format, ...);
 
 # define GET_NEXT_LINE_H
-# define BUFF_SIZE 1
-typedef struct    s_gnl
-{
-    char        *buf;
-    int            count;
-    int            i;
-    int            nl;
-    int            fd;
-}                t_gnl;
+# define BUFF_SIZE 10
+
 int					get_next_line(const int fd, char **line);
 
 typedef struct		s_filed
@@ -43,6 +36,15 @@ typedef struct		s_filed
 	struct s_filed	*next;
 	char			*str;
 }					t_lst;
+
+typedef struct    s_gnl
+{
+    char        *buf;
+    int            count;
+    int            i;
+    int            nl;
+    int            fd;
+}                t_gnl;
 
 void				*ft_memset(void *destination, int c, size_t n);
 void				ft_bzero(void *destination, size_t n);
