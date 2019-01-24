@@ -25,11 +25,11 @@ int		place_piece(int y, int x)
 		j = 0;
 		while (j < g_filler.piece.width)
 		{
-			if (g_filler.piece.piece[i][j] == '.' || g_filler.field.piece[y][x] == '.')
-				;
-			else if (g_filler.piece.piece[i][j] == '*' && (g_filler.field.piece[y][x] == g_filler.player.number || g_filler.field.piece[y][x] == g_filler.player.number + 32))
+			if (g_filler.piece.piece[i][j] == '*' && (g_filler.field.piece[y][x] ==
+									g_filler.player.number || g_filler.field.piece[y][x] == g_filler.player.number + 32))
 				count++;
-			else
+			if (g_filler.piece.piece[i][j] == '*' && (g_filler.field.piece[y][x] ==
+									g_filler.enemy.number || g_filler.field.piece[y][x] == g_filler.enemy.number + 32))
 				return (0);
 			j++;
 			x++;
@@ -219,6 +219,7 @@ void	coords_start(void)
 
 int		find_place(void)
 {
+//	ft_printf("p.x-%i e.x-%i p.y-%i p.e-%i\n", g_filler.player.start.x, g_filler.enemy.start.x, g_filler.player.start.y, g_filler.enemy.start.y);
 	if (g_filler.player.start.x > g_filler.enemy.start.x && g_filler.player.start.y > g_filler.enemy.start.y)
 	{
 //		ft_printf("upleft\n");
@@ -231,12 +232,12 @@ int		find_place(void)
 	}
 	else if (g_filler.player.start.x < g_filler.enemy.start.x && g_filler.player.start.y > g_filler.enemy.start.y)
 	{
-		ft_printf("upright\n");
+//		ft_printf("upright\n");
 		return (up_right());
 	}
 	else
 	{
-		ft_printf("downright\n");
+//		ft_printf("downright\n");
 		return (down_right());
 	}
 }
