@@ -6,7 +6,7 @@
 /*   By: ybuhai <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/30 17:49:16 by ybuhai            #+#    #+#             */
-/*   Updated: 2019/01/22 21:46:58 by ybuhai           ###   ########.fr       */
+/*   Updated: 2019/01/24 14:22:48 by ybuhai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,13 @@
 
 int					get_next_line(const int fd, char **line);
 
-typedef struct        s_gnl
+typedef struct		s_gnl
 {
-    char            *text;
-    char            *tempo;
-    struct s_gnl    *next;
-    int                fd;
-}                    t_gnl;
+	char			*text;
+	char			*tempo;
+	struct s_gnl	*next;
+	int				fd;
+}					t_gnl;
 
 void				*ft_memset(void *destination, int c, size_t n);
 void				ft_bzero(void *destination, size_t n);

@@ -6,7 +6,7 @@
 #    By: ybuhai <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/21 14:55:38 by ybuhai            #+#    #+#              #
-#    Updated: 2019/01/22 14:43:16 by ybuhai           ###   ########.fr        #
+#    Updated: 2019/01/24 14:42:03 by ybuhai           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,25 +29,25 @@ C			=	gcc
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	make -C $(LIB)
-	$(C) -g3 -O0 -o $(NAME) $(OBJ) $(LIB)$(LIB_N) $(INCLUDE)
+	@make -C $(LIB)
+	@$(C) -g3 -O0 -o $(NAME) $(OBJ) $(LIB)$(LIB_N) $(INCLUDE)
 
 $(OBJ): | $(OBJ_D)
 
 $(OBJ_D):
-	mkdir -p $(OBJ_D)$(SRC_D)
+	@mkdir -p $(OBJ_D)$(SRC_D)
 
 $(OBJ_D)%.o: %.c
-	$(C) $(CFLAGS) $(INCLUDE) -o $@ -c $<
+	@$(C) $(CFLAGS) $(INCLUDE) -o $@ -c $<
 
 clean:
-	make clean -C $(LIB)
-	rm -f $(OBJ)
+	@make clean -C $(LIB)
+	@rm -f $(OBJ)
 
 fclean: clean
-	make fclean -C $(LIB)
-	rm -f $(NAME)
-	rm -rf $(OBJ_D)
+	@make fclean -C $(LIB)
+	@rm -f $(NAME)
+	@rm -rf $(OBJ_D)
 
 re: fclean all
 
