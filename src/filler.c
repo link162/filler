@@ -28,15 +28,17 @@ void	clear_piece(void)
 void	clear_field(void)
 {
 	int	i;
+	char *str;
 
 	i = 0;
 	while (i < g_filler.field.height)
 		free(g_filler.field.piece[i++]);
 	free(g_filler.field.piece);
+	get_next_line(-5, &str);
 	exit (1);
 }
 
-void	filler(void)
+void	filler(char **str)
 {
 	int res;
 
@@ -47,7 +49,10 @@ void	filler(void)
 	ft_putchar('\n');
 	clear_piece();
 	if (!res)
+	{
+		free(*str);
 		clear_field();
+	}
 }
 void	read_field(void)
 {
@@ -84,7 +89,6 @@ void	read_piece(void)
 	{
 		get_next_line(0, &str);
 		g_filler.piece.piece[i] = strdup(str);
-//		ft_printf("***%i\n", i);
 		free(str);
 		i++;
 	}
@@ -109,7 +113,7 @@ void	cycle_filler(void)
 			g_filler.piece.height = ft_atoi(&str[6]);
 			g_filler.piece.width = ft_atoi(ft_strchr(&str[6], ' '));
 			read_piece();
-			filler();
+			filler(&str);
 		}
 		free(str);
 	}

@@ -14,10 +14,15 @@
 
 static void		clear_gnl(t_gnl *new)
 {
+	t_gnl *t;
+
 	while (new)
 	{
-		free(new->text);
-		new = new->next;
+		if (new->text)
+			free(new->text);
+		t = new->next;
+		free(new);
+		new = t;
 	}
 	exit (1);
 }
