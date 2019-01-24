@@ -31,6 +31,6 @@ typedef struct	s_filler
 }				t_filler;
 
 t_filler		g_filler;
-int				find_place(void);
+void			filler(char **str);
 
 #endif

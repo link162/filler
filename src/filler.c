@@ -6,54 +6,12 @@
 /*   By: ybuhai <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 14:57:29 by ybuhai            #+#    #+#             */
-/*   Updated: 2019/01/23 16:51:29 by ybuhai           ###   ########.fr       */
+/*   Updated: 2019/01/24 15:28:26 by ybuhai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
-#include <string.h>
 
-void	clear_piece(void)
-{
-	int		i;
-
-	i = 0;
-	if (!g_filler.piece.piece)
-		return ;
-	while (i < g_filler.piece.height)
-		free(g_filler.piece.piece[i++]);
-	free(g_filler.piece.piece);
-}
-
-void	clear_field(void)
-{
-	int	i;
-	char *str;
-
-	i = 0;
-	while (i < g_filler.field.height)
-		free(g_filler.field.piece[i++]);
-	free(g_filler.field.piece);
-	get_next_line(-5, &str);
-	exit (1);
-}
-
-void	filler(char **str)
-{
-	int res;
-
-	res = find_place();
-	ft_putnbr(g_filler.candidat.y);
-	ft_putchar(' ');
-	ft_putnbr(g_filler.candidat.x);
-	ft_putchar('\n');
-	clear_piece();
-	if (!res)
-	{
-		free(*str);
-		clear_field();
-	}
-}
 void	read_field(void)
 {
 	char		*str;
@@ -64,7 +22,8 @@ void	read_field(void)
 	get_next_line(0, &str);
 	free(str);
 	if (x != 10)
-		g_filler.field.piece = (char **)malloc(sizeof(char *) * g_filler.field.height);
+		g_filler.field.piece = (char **)malloc(sizeof(char *)
+				* g_filler.field.height);
 	while (i < g_filler.field.height)
 	{
 		get_next_line(0, &str);
@@ -84,7 +43,8 @@ void	read_piece(void)
 	char		*str;
 
 	i = 0;
-	g_filler.piece.piece = (char **)malloc(sizeof(char *) * (g_filler.piece.height + 1));
+	g_filler.piece.piece = (char **)malloc(sizeof(char *)
+			* (g_filler.piece.height + 1));
 	while (i < g_filler.piece.height)
 	{
 		get_next_line(0, &str);
@@ -131,21 +91,3 @@ int		main(void)
 	free(str);
 	cycle_filler();
 }
-/*
-int main(void)
-{
-	char **str;
-	int size = 10;
-	int i = 0;
-
-	str = (char **)malloc(sizeof(char *) * size);
-	while (i < size)
-		str[i++] = ft_strdup("hello world");
-	i = 0;
-	while (i < size)
-		ft_printf("%s\n", str[i++]);
-	i = 0;
-	while (i < size)
-		free(str[i++]);
-	free(str);
-}*/
