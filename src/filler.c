@@ -11,6 +11,30 @@
 /* ************************************************************************** */
 
 #include "filler.h"
+#include <string.h>
+
+void	clear_piece(void)
+{
+	int		i;
+
+	i = 0;
+	if (!g_filler.piece.piece)
+		return ;
+	while (i < g_filler.piece.height)
+		free(g_filler.piece.piece[i++]);
+	free(g_filler.piece.piece);
+}
+
+void	clear_field(void)
+{
+	int	i;
+
+	i = 0;
+	while (i < g_filler.field.height)
+		free(g_filler.field.piece[i++]);
+	free(g_filler.field.piece);
+	exit (1);
+}
 
 void	filler(void)
 {
@@ -21,25 +45,10 @@ void	filler(void)
 	ft_putchar(' ');
 	ft_putnbr(g_filler.candidat.x);
 	ft_putchar('\n');
+	clear_piece();
 	if (!res)
-		exit(1);
+		clear_field();
 }
-
-void	clear_field(void)
-{
-	int		i;
-
-	i = 0;
-	if (!g_filler.piece.piece)
-		return ;
-	while (i < g_filler.piece.height)
-	{
-		free(g_filler.piece.piece[i]);
-		i++;
-	}	
-	free(g_filler.piece.piece);
-}
-
 void	read_field(void)
 {
 	char		*str;
@@ -66,17 +75,16 @@ void	read_field(void)
 
 void	read_piece(void)
 {
-	int		i;
-	char	*str;
+	int			i;
+	char		*str;
 
 	i = 0;
-	if (g_filler.piece.piece)
-		clear_field();
 	g_filler.piece.piece = (char **)malloc(sizeof(char *) * (g_filler.piece.height + 1));
 	while (i < g_filler.piece.height)
 	{
 		get_next_line(0, &str);
-		g_filler.piece.piece[i] = ft_strdup(str);
+		g_filler.piece.piece[i] = strdup(str);
+//		ft_printf("***%i\n", i);
 		free(str);
 		i++;
 	}
@@ -122,14 +130,18 @@ int		main(void)
 /*
 int main(void)
 {
-	char *str;
+	char **str;
+	int size = 10;
 	int i = 0;
 
-	while (i < 5)
-	{
-		get_next_line(0, &str);
-		ft_printf("%s\n", str);
-		i++;
-		free(str);
-	}
+	str = (char **)malloc(sizeof(char *) * size);
+	while (i < size)
+		str[i++] = ft_strdup("hello world");
+	i = 0;
+	while (i < size)
+		ft_printf("%s\n", str[i++]);
+	i = 0;
+	while (i < size)
+		free(str[i++]);
+	free(str);
 }*/

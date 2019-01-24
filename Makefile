@@ -23,31 +23,31 @@ OBJ_D		=	obj/
 OBJ			=	$(addprefix $(OBJ_D), $(SRC:.c=.o))
 
 INCLUDE		=	-I includes/
-CFLAGS		=	-Wall -Wextra -Werror -g3 -O0
+CFLAGS		=	-g3 -O0
 C			=	gcc
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@make -C $(LIB)
-	@$(C) -g3 -O0 -o $(NAME) $(OBJ) $(LIB)$(LIB_N) $(INCLUDE)
+	make -C $(LIB)
+	$(C) -g3 -O0 -o $(NAME) $(OBJ) $(LIB)$(LIB_N) $(INCLUDE)
 
 $(OBJ): | $(OBJ_D)
 
 $(OBJ_D):
-	@mkdir -p $(OBJ_D)$(SRC_D)
+	mkdir -p $(OBJ_D)$(SRC_D)
 
 $(OBJ_D)%.o: %.c
-	@$(C) $(CFLAGS) $(INCLUDE) -o $@ -c $<
+	$(C) $(CFLAGS) $(INCLUDE) -o $@ -c $<
 
 clean:
-	@make clean -C $(LIB)
-	@rm -f $(OBJ)
+	make clean -C $(LIB)
+	rm -f $(OBJ)
 
 fclean: clean
-	@make fclean -C $(LIB)
-	@rm -f $(NAME)
-	@rm -rf $(OBJ_D)
+	make fclean -C $(LIB)
+	rm -f $(NAME)
+	rm -rf $(OBJ_D)
 
 re: fclean all
 

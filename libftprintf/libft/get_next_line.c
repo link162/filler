@@ -82,7 +82,7 @@ static int        ft_check(char *save, char **line)
 int                get_next_line(const int fd, char **line)
 {
     char            buf[BUFF_SIZE + 1];
-    static t_gnl    *save = NULL;
+    static t_gnl    *save;
     t_gnl            *tmp;
     int                ret;
     
