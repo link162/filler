@@ -6,7 +6,7 @@
 /*   By: ybuhai <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/24 14:18:21 by ybuhai            #+#    #+#             */
-/*   Updated: 2019/01/24 14:40:29 by ybuhai           ###   ########.fr       */
+/*   Updated: 2019/01/26 17:46:38 by ybuhai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void		clear_gnl(t_gnl *new)
 		free(new);
 		new = t;
 	}
-	exit (1);
+	exit(1);
 }
 
 static t_gnl	*ft_create_list(int fd)

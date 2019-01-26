@@ -6,7 +6,7 @@
 /*   By: ybuhai <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 16:59:51 by ybuhai            #+#    #+#             */
-/*   Updated: 2019/01/26 15:21:03 by ybuhai           ###   ########.fr       */
+/*   Updated: 2019/01/26 17:49:17 by ybuhai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int		cut_down(void)
 	}
 	return (1);
 }
+
 int		cut_left(void)
 {
 	int x;
@@ -42,6 +43,7 @@ int		cut_left(void)
 	}
 	return (1);
 }
+
 int		cut_right(void)
 {
 	int x;
@@ -57,6 +59,7 @@ int		cut_right(void)
 	}
 	return (1);
 }
+
 int		cut_up(void)
 {
 	int x;
