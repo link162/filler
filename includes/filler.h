@@ -17,7 +17,9 @@ typedef struct	s_player
 typedef struct	s_piece
 {
 	int			height;
+	int			heightreal;
 	int			width;
+	int			widthreal;
 	char		**piece;
 }				t_piece;
 
@@ -32,5 +34,6 @@ typedef struct	s_filler
 
 t_filler		g_filler;
 void			filler(char **str);
+void			find_real_piece(void);
 
 #endif

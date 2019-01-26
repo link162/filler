@@ -6,7 +6,7 @@
 /*   By: ybuhai <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 14:43:34 by ybuhai            #+#    #+#             */
-/*   Updated: 2019/01/25 15:51:21 by ybuhai           ###   ########.fr       */
+/*   Updated: 2019/01/26 17:27:30 by ybuhai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,23 +30,28 @@ int		place_piece(int y, int x)
 	int y2;
 	int count;
 
+	//переделать размерности и сравнения полей
 	count = 0;
-	y2 = 0;
-	while (y2 < g_filler.piece.height)
+	y2 = g_filler.candidat.y;//0
+	while (y2 < g_filler.piece.heightreal + g_filler.candidat.y)
 	{
-		x2 = 0;
-		while (x2 < g_filler.piece.width)
+		x2 = g_filler.candidat.x;//1
+		while (x2 < g_filler.piece.widthreal + g_filler.candidat.x)//2
 		{
-			if (g_filler.piece.piece[y2][x2] == '*' && (g_filler.field.piece[y2 + y][x2 + x] == g_filler.player.number || g_filler.field.piece[y2 + y][x2 + x] == g_filler.player.number + 32))
+//			ft_printf("***y2 = %i x2 = %i\n", y, x);
+			if (g_filler.piece.piece[y2][x2] == '*' && (g_filler.field.piece[y2 + y - g_filler.candidat.y][x2 + x - g_filler.candidat.x] == g_filler.player.number || g_filler.field.piece[y2 + y - g_filler.candidat.y][x2 + x - g_filler.candidat.x] == g_filler.player.number + 32))
 				count++;
-			if (g_filler.piece.piece[y2][x2] == '*' && (g_filler.field.piece[y2 + y][x2 + x] == g_filler.enemy.number || g_filler.field.piece[y2 + y][x2 + x] == g_filler.enemy.number + 32))
+//			ft_printf("hellllo\n");
+			if (g_filler.piece.piece[y2][x2] == '*' && (g_filler.field.piece[y2 + y - g_filler.candidat.y][x2 + x - g_filler.candidat.x] == g_filler.enemy.number || g_filler.field.piece[y2 + y - g_filler.candidat.y][x2 + x - g_filler.candidat.x] == g_filler.enemy.number + 32))
 				return (0);
 			x2++;
 		}
 		y2++;
 	}
+//	ft_printf("field y - %i x - %i\n", y, x);
 	if (count == 1)
 		return (1);
+//	ft_putstr("out\n");
 	return (0);
 }
 
@@ -62,11 +67,12 @@ int		up_right(void)
 		x = g_filler.field.width - 1;
 		while (x >= 0)
 		{
-			if (g_filler.field.height - g_filler.piece.height - y >= 0 && g_filler.field.width - g_filler.piece.width - x >= 0)
+			if (g_filler.field.height - g_filler.piece.heightreal - g_filler.candidat.y - y >= 0 && g_filler.field.width - g_filler.piece.widthreal - g_filler.candidat.x - x >= 0)
 				if (place_piece(y, x))
 				{
-					g_filler.candidat.x = x;
-					g_filler.candidat.y = y;
+//					ft_printf("will put y = %i  x = %i\n", y, x);
+					g_filler.candidat.x = x - g_filler.candidat.x;
+					g_filler.candidat.y = y - g_filler.candidat.y;
 					return (1);
 				}
 			x--;
@@ -88,11 +94,12 @@ int		down_left(void)
 		x = 0;
 		while (x < g_filler.field.width)
 		{
-			if (g_filler.field.height - g_filler.piece.height - y >= 0 && g_filler.field.width - g_filler.piece.width - x >= 0)
+			if (g_filler.field.height - g_filler.piece.heightreal - g_filler.candidat.y - y >= 0 && g_filler.field.width - g_filler.piece.widthreal - g_filler.candidat.x - x >= 0)
 				if (place_piece(y, x))
 				{
-					g_filler.candidat.x = x;
-					g_filler.candidat.y = y;
+//					ft_printf("will put y = %i  x = %i\n", y, x);
+					g_filler.candidat.x = x - g_filler.candidat.x;
+					g_filler.candidat.y = y - g_filler.candidat.y;
 					return (1);
 				}
 			x++;
@@ -114,11 +121,12 @@ int		up_left(void)
 		x = 0;
 		while (x < g_filler.field.width)
 		{
-			if (g_filler.field.height - g_filler.piece.height - y >= 0 && g_filler.field.width - g_filler.piece.width - x >= 0)
+			if (g_filler.field.height - g_filler.piece.heightreal - g_filler.candidat.y - y >= 0 && g_filler.field.width - g_filler.piece.widthreal - g_filler.candidat.x - x >= 0)
 				if (place_piece(y, x))
 				{
-					g_filler.candidat.x = x;
-					g_filler.candidat.y = y;
+//					ft_printf("will put y = %i  x = %i\n", y, x);
+					g_filler.candidat.x = x - g_filler.candidat.x;
+					g_filler.candidat.y = y - g_filler.candidat.y;
 					return (1);
 				}
 			x++;
@@ -140,12 +148,14 @@ int		down_right(void)
 		x = g_filler.field.width - 1;
 		while (x >= 0)
 		{
-			if (g_filler.field.height - g_filler.piece.height - y >= 0 && g_filler.field.width - g_filler.piece.width - x >= 0)
+			if (g_filler.field.height - g_filler.piece.heightreal - g_filler.candidat.y - y >= 0 && g_filler.field.width - g_filler.piece.widthreal - g_filler.candidat.x - x >= 0)
 			{
+//				ft_printf("---y = %i x = %i\n", y, x);
 				if (place_piece(y, x))
 				{
-					g_filler.candidat.x = x;
-					g_filler.candidat.y = y;
+//					ft_printf("willllll put y = %i  x = %i\n", y, x);
+					g_filler.candidat.x = x - g_filler.candidat.x;
+					g_filler.candidat.y = y - g_filler.candidat.y;
 					return (1);
 				}
 			}
@@ -214,15 +224,14 @@ void	coords_current(void)
 int		make_choise(void)
 {
 //	ft_printf("my y-%i x-%i enemy y-%i x-%i\n", g_filler.player.start.y, g_filler.player.start.x, g_filler.enemy.start.y, g_filler.enemy.start.x);
-	if (g_filler.player.start.x <= g_filler.enemy.start.x && g_filler.player.start.y <= g_filler.enemy.start.y)
+	if (g_filler.player.start.x <= g_filler.enemy.start.x && g_filler.player.start.y >= g_filler.enemy.start.y - 3)
+		return (up_right());
+	else if (g_filler.player.start.x <= g_filler.enemy.start.x && g_filler.player.start.y <= g_filler.enemy.start.y)
 		return (down_right());
 	else if (g_filler.player.start.x >= g_filler.enemy.start.x && g_filler.player.start.y <= g_filler.enemy.start.y)
 		return (down_left());
-	else if (g_filler.player.start.x >= g_filler.enemy.start.x && g_filler.player.start.y >= g_filler.enemy.start.y)
-		return (up_left());
 	else
-		return (up_right());
-	
+		return (up_left());
 }
 
 void	filler(char **str)
@@ -231,7 +240,23 @@ void	filler(char **str)
 	int i;
 
 	coords_current();
-//	find_real_piece();
+	find_real_piece();
+//	ft_printf("put y-%i x-%i real y-%i x-%i\n", g_filler.piece.height, g_filler.piece.width, g_filler.piece.heightreal, g_filler.piece.widthreal);
+/*	int x;
+	int y;
+	y = g_filler.candidat.y;
+	while (y < g_filler.piece.heightreal + g_filler.candidat.y)
+	{
+//		ft_printf("$$$$$%i\n", g_filler.candidat.x);
+		x = g_filler.candidat.x;
+		while (x < g_filler.piece.widthreal + g_filler.candidat.x)
+		{
+			ft_printf("%c", g_filler.piece.piece[y][x]);
+			x++;
+		}
+		ft_putchar('\n');
+		y++;
+	}*/
 	res = make_choise();
 	if (!res)
 	{

@@ -6,7 +6,7 @@
 #    By: ybuhai <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/21 14:55:38 by ybuhai            #+#    #+#              #
-#    Updated: 2019/01/24 14:42:03 by ybuhai           ###   ########.fr        #
+#    Updated: 2019/01/25 19:08:03 by ybuhai           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ LIB_N		=	libftprintf.a
 SRC_D		=	src/
 SRC			=	$(SRC_D)filler.c \
 				$(SRC_D)place.c \
+				$(SRC_D)find_real_piece.c \
 
 OBJ_D		=	obj/
 OBJ			=	$(addprefix $(OBJ_D), $(SRC:.c=.o))
