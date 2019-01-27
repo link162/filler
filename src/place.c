@@ -95,10 +95,11 @@ int		down_left(void)
 
 	y = g_filler.field.height - 1;
 	while (y >= 0)
-	{
+	{			
 		x = 0;
 		while (x < g_filler.field.width)
-		{
+		{		
+		ft_printf("dly-%i x-%i\n", y, x);
 			if (g_filler.field.height - g_filler.piece.heightreal -
 					g_filler.candidat.y - y >= 0 && g_filler.field.width -
 					g_filler.piece.widthreal - g_filler.candidat.x - x >= 0)
@@ -123,9 +124,11 @@ int		up_left(void)
 	y = 0;
 	while (y < g_filler.field.height)
 	{
+
 		x = 0;
 		while (x < g_filler.field.width)
 		{
+		ft_printf("uly-%i x-%i\n", y, x);
 			if (g_filler.field.height - g_filler.piece.heightreal -
 					g_filler.candidat.y - y >= 0 && g_filler.field.width -
 					g_filler.piece.widthreal - g_filler.candidat.x - x >= 0)
@@ -153,6 +156,7 @@ int		down_right(void)
 		x = g_filler.field.width - 1;
 		while (x >= 0)
 		{
+			ft_printf("dry-%i x-%i\n", y, x);
 			if (g_filler.field.height - g_filler.piece.heightreal -
 					g_filler.candidat.y - y >= 0 && g_filler.field.width -
 					g_filler.piece.widthreal - g_filler.candidat.x - x >= 0)
