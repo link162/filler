@@ -6,7 +6,7 @@
 #    By: ybuhai <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/21 14:55:38 by ybuhai            #+#    #+#              #
-#    Updated: 2019/01/25 19:08:03 by ybuhai           ###   ########.fr        #
+#    Updated: 2019/01/28 17:45:59 by ybuhai           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,19 +19,20 @@ SRC_D		=	src/
 SRC			=	$(SRC_D)filler.c \
 				$(SRC_D)place.c \
 				$(SRC_D)find_real_piece.c \
+				$(SRC_D)up_down.c \
 
 OBJ_D		=	obj/
 OBJ			=	$(addprefix $(OBJ_D), $(SRC:.c=.o))
 
 INCLUDE		=	-I includes/
-CFLAGS		=	-g3 -O0
+CFLAGS		=	-Wall -Wextra -Werror
 C			=	gcc
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
 	@make -C $(LIB)
-	@$(C) -g3 -O0 -o $(NAME) $(OBJ) $(LIB)$(LIB_N) $(INCLUDE)
+	@$(C) $(CFLAGS) -o $(NAME) $(OBJ) $(LIB)$(LIB_N) $(INCLUDE)
 
 $(OBJ): | $(OBJ_D)
 
